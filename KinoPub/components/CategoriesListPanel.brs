@@ -14,7 +14,7 @@ sub init()
     m.top.dialog = invalid
 
     m.currentCategory = ""
-    m.top.observeField("start","start")
+    m.top.observeField("start", "start")
 end sub
 
 sub start()
@@ -31,12 +31,11 @@ sub start()
 
     m.readContentTask.parameters = []
     m.readContentTask.control = "RUN"
-
 end sub
 
 sub error()
     print "CategoriesListPanel:error()"
-    source = "CategoriesListPanel:"+m.top.pType
+    source = "CategoriesListPanel:" + m.top.pType
     errorMessage = m.global.utilities.callFunc("GetErrorMessage", {errorCode: m.readContentTask.error, source: source})
     print errorMessage
     font  = CreateObject("roSGNode", "Font")
@@ -67,7 +66,7 @@ sub setCategories()
             itemContent.setField("id", itemId.ToStr())
             itemContent.addFields({ kinoPubId: item.id})
             itemContent.setField("title", recode(item.title))
-            itemId = itemId+1
+            itemId = itemId + 1
         end for
 
     else
@@ -77,7 +76,7 @@ sub setCategories()
             itemContent.setField("id", itemId.ToStr())
             itemContent.addFields({kinoPubId: item.id.ToStr()})
             itemContent.setField("title", recode(item.title))
-            itemId = itemId+1
+            itemId = itemId + 1
         end for
     end if
 
@@ -100,15 +99,13 @@ sub itemFocused()
     selectedCategory = categorycontent.kinoPubId.ToStr()
     if selectedCategory = "bookmarks"
         m.preparedPanel = createObject("roSGNode", "CategoriesListPanel")
-        m.preparedPanel.previousPanel = m.top
         m.preparedPanel.panelSet = m.top.panelSet
         m.preparedPanel.pType = "bookmarks"
-        m.currentCategory = "bookmarks"
     else
         m.preparedPanel = createObject("roSGNode", "PosterGridPanel")
-        m.preparedPanel.previousPanel = m.top
-        m.currentCategory = selectedCategory
     end if
+    m.preparedPanel.previousPanel = m.top
+    m.currentCategory = selectedCategory
 end sub
 
 sub categorySelected()

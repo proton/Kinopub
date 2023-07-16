@@ -47,7 +47,7 @@ sub start()
     content = createObject("roSGNode", "ContentNode")
     columnCount = 0
     row = createObject("roSGNode", "ContentNode")
-    for i = 0 to m.top.seasonNode.getChildCount()-1
+    for i = 0 to m.top.seasonNode.getChildCount() - 1
         item = m.top.seasonNode.getChild(i)
         if columnCount = m.numColumns
             columnCount = 0
@@ -102,7 +102,7 @@ sub updateFocus()
     print "SeasonRowListPanel:updateFocus()"
     if m.top.updateFocus
         if m.playlist <> invalid
-            for i = 0 to m.playlist.getChildCount()-1 step 1
+            for i = 0 to m.playlist.getChildCount() - 1 step 1
                 episodeIndex = m.playListFirstIndex + i
                 rowIndex = episodeIndex \ m.numColumns
                 columnIndex = episodeIndex MOD m.numColumns
@@ -170,7 +170,7 @@ sub gotoVideo(episodeIndex as Integer, seekTo as Float)
     nPanel = invalid
 
     playlist = createObject("roSGNode", "ContentNode")
-    for i = episodeIndex to m.top.seasonNode.getChildCount()-1
+    for i = episodeIndex to m.top.seasonNode.getChildCount() - 1
         episode = m.top.seasonNode.getChild(i)
         quality = getPreferredQuality(episode)
 
@@ -279,7 +279,7 @@ function getPreferredQuality(episode as Object) as Object
     qualityCount = episode.files.Count()
     qualities = createObject("roArray", qualityCount, false)
     qualityIndex = -1
-    for i = 0 to episode.files.Count()-1  step 1
+    for i = 0 to episode.files.Count() - 1  step 1
         qualities.push(episode.files[i].quality)
         if episode.files[i].quality = "1080p"
             qualityIndex = i
@@ -300,7 +300,7 @@ function getPreferredStream(file as Object) as Object
     streams.Sort("")
 
     streamIndex = -1
-    for i = 0 to streams.Count()-1  step 1
+    for i = 0 to streams.Count() - 1  step 1
         if streams[i] = preferredStream
             streamIndex = i
         end if

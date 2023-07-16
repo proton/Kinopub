@@ -61,7 +61,7 @@ sub showPosterGrid()
             m.totalItems = m.readPosterGridTask.content.pagination.total_items
         end if
 
-        for i = 0 to m.readPosterGridTask.content.items.Count()-1 step 1
+        for i = 0 to m.readPosterGridTask.content.items.Count() - 1 step 1
             content = createObject("roSGNode", "ContentNode")
             m.top.grid.content.appendChild(content)
         end for
@@ -129,7 +129,7 @@ end sub
 
 sub error()
     print "PosterGrid:error()"
-    source = "PosterGrid:"+m.nextPage.ToStr()
+    source = "PosterGrid:" + m.nextPage.ToStr()
     errorMessage = m.global.utilities.callFunc("GetErrorMessage", {errorCode: m.readPosterGridTask.error, source: source})
     print errorMessage
     font  = CreateObject("roSGNode", "Font")

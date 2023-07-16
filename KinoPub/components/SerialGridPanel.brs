@@ -52,10 +52,10 @@ end sub
 sub slideBack()
     if m.top.isInFocusChain() and false = m.top.panelSet.isGoingBack
         print "SerialGridPanel:slideBack"
-        for i = 0 to m.rowList.content.getChild(0).getChildCount()-1
+        for i = 0 to m.rowList.content.getChild(0).getChildCount() - 1
             season = m.rowList.content.getChild(0).getChild(i)
             seasonWatched = true
-            for j = season.getChildCount()-1 to 0 step -1
+            for j = season.getChildCount() - 1 to 0 step -1
                 episode = season.getChild(j)
 
                 if i = 1
@@ -188,7 +188,7 @@ sub showSerial()
     row = createObject("roSGNode", "ContentNode")
     row.title = "Seasons"
 
-    for i = 0 to m.readSerialTask.content.item.seasons.Count()-1 step 1
+    for i = 0 to m.readSerialTask.content.item.seasons.Count() - 1 step 1
         seasonWatched = true
         for each episode in m.readSerialTask.content.item.seasons[i].episodes
             if episode.watched <> 1

@@ -117,7 +117,7 @@ function buildUrl(baseUrl as String, parameters as Object) as String
         url.AppendString("?", 1)
         ' tempStr = createObject("roString")
         foundAuth = false
-        for i = 0 to parameters.Count()-1 step 2
+        for i = 0 to parameters.Count() - 1 step 2
             if i > 0
                 url.AppendString("&", 1)
             end if
