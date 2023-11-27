@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      version: ${{ steps.extract_version.outputs.test }}
+      version: ${{ steps.extract_version.outputs.version }}
       version_exists: ${{ steps.check_tag.outputs.version_exists }}
 
     steps:
