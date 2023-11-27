@@ -1,0 +1,70 @@
+
+name: Create GitHub Release
+
+on:
+  push:
+    branches:
+      - master
+      - github-release
+
+jobs:
+  check_tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from package.json
+        id: extract_version
+        run: |
+          VERSION=$(grep 'version"' package.json | cut -d '"' -f 4)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if the tag exists
+        id: check_tag
+        run: |
+          if git rev-parse --quiet --verify "refs/tags/${{ steps.extract_version.outputs.version }}" >/dev/null; then
+            echo "The tag ${{ steps.extract_version.outputs.version }} exists. Workflow will be canceled."
+            echo "version_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "The tag ${{ steps.extract_version.outputs.version }} does not exist."
+            echo "version_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+  tag_and_release:
+    runs-on: ubuntu-latest
+    needs: check_tag
+    if: ${{ needs.check_tag.outputs.version_exists == 'false' }}
+
+    steps:
+      - name: Create tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ steps.extract_version.outputs.version }}',
+              sha: context.sha
+            })
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.extract_version.outputs.version }}
+          files: |
+            out/Kino.pub_${{ steps.extract_version.outputs.version }}.zip
+
+      - name: Publish Release URL
+        run: |
+          echo "Release URL: ${{ steps.create_release.outputs.upload_url }}"
