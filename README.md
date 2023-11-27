@@ -32,3 +32,4 @@ Help wanted with:
 - Add subtitles (without captions)
 - Implement fresh/hot/popular videos (https://kinoapi.com/api_video.html#shortcut)
 - Implement history (https://kinoapi.com/api_history.html)
+- Simplify the audio tracks switch (we may use up/down buttons for that)
