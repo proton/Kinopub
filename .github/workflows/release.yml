@@ -18,7 +18,7 @@ jobs:
         id: extract_version
         run: |
           VERSION=$(grep 'version"' package.json | cut -d '"' -f 4)
-          echo "::set-output name=version::$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create tag
         uses: actions/github-script@v7
