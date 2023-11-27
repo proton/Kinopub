@@ -43,6 +43,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ steps.extract_version.outputs.version }}
           files: |
             out/Kino.pub_${{ steps.extract_version.outputs.version }}.zip
 
