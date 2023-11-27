@@ -20,15 +20,18 @@ jobs:
         run: |
           VERSION=$(grep 'version"' package.json | cut -d '"' -f 4)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "::set-output name=version::$VERSION"
 
       - name: Check if the tag exists
         run: |
           if git rev-parse --quiet --verify "refs/tags/${{ steps.extract_version.outputs.version }}" >/dev/null; then
             echo "The tag ${{ steps.extract_version.outputs.version }} exists. Workflow will be canceled."
             echo "version_exists=true" >> $GITHUB_OUTPUT
+            echo "::set-output name=version_exists::true"
           else
             echo "The tag ${{ steps.extract_version.outputs.version }} does not exist."
             echo "version_exists=false" >> $GITHUB_OUTPUT
+            echo "::set-output name=version_exists::false"
           fi
 
       - name: Debug
