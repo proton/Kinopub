@@ -22,7 +22,6 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Check if the tag exists
-        id: check_tag
         run: |
           if git rev-parse --quiet --verify "refs/tags/${{ steps.extract_version.outputs.version }}" >/dev/null; then
             echo "The tag ${{ steps.extract_version.outputs.version }} exists. Workflow will be canceled."
@@ -45,7 +44,7 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/${{ steps.extract_version.outputs.version }}',
+              ref: 'refs/tags/${{ needs.check_tag.outputs.version }}',
               sha: context.sha
             })
 
@@ -61,9 +60,9 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.extract_version.outputs.version }}
+          tag_name: ${{ needs.check_tag.outputs.version }}
           files: |
-            out/Kino.pub_${{ steps.extract_version.outputs.version }}.zip
+            out/Kino.pub_${{ needs.check_tag.outputs.version }}.zip
 
       - name: Publish Release URL
         run: |
