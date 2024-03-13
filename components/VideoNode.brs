@@ -52,6 +52,11 @@ sub stateChanged()
          if m.video.state <> "error" and m.video.state <> "buffering"
             timerFired()
          end if
+
+         if m.video.state = "error"
+            print "VideoNode:StateChanged: Error"
+            print m.video.errorStr
+         end if
     end if
 end sub
 
